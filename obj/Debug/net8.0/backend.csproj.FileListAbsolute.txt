@@ -31,3 +31,4 @@
 /Users/andrea/teaching/sda-c/practice/backend/obj/Debug/net8.0/backend.pdb
 /Users/andrea/teaching/sda-c/practice/backend/obj/Debug/net8.0/backend.genruntimeconfig.cache
 /Users/andrea/teaching/sda-c/practice/backend/obj/Debug/net8.0/ref/backend.dll
+/Users/andrea/teaching/sda-c/practice/backend/obj/Debug/net8.0/backend.sourcelink.json
