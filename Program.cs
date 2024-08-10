@@ -1,9 +1,15 @@
 using Microsoft.Extensions.Logging;
+using Npgsql;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add Npgsql database connection service
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddSingleton<NpgsqlConnection>(provider => new NpgsqlConnection(connectionString));
 
 var app = builder.Build();
 
