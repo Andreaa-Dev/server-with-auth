@@ -9,3 +9,4 @@ Notes
 ### Notes
 
 1. connection string in appsettings
+2. DTO: Data Transfer Objects
