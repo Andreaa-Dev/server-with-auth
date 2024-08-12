@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "vnFEF604i0Y=",
+  "dgSpecHash": "uhiajqQaopo=",
   "success": true,
   "projectFilePath": "/Users/andrea/teaching/sda-c/practice/backend/backend.csproj",
   "expectedPackageFiles": [
+    "/Users/andrea/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/Users/andrea/.nuget/packages/efcore.namingconventions/8.0.3/efcore.namingconventions.8.0.3.nupkg.sha512",
     "/Users/andrea/.nuget/packages/microsoft.aspnetcore.openapi/8.0.7/microsoft.aspnetcore.openapi.8.0.7.nupkg.sha512",
     "/Users/andrea/.nuget/packages/microsoft.entityframeworkcore/8.0.7/microsoft.entityframeworkcore.8.0.7.nupkg.sha512",

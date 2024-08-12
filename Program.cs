@@ -4,11 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Backend.src.Database;
 using Backend.src.Entity;
+using Backend.src.Service.Impl;
+using Backend.src.Service;
+using Backend.src.Abstraction;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// add controllers
+builder.Services.AddControllers();
 
 // add database service
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
@@ -21,6 +28,14 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     .UseNpgsql(dataSource);
 }
 );
+// add automapper service
+builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
+
+// add DI services
+builder.Services
+    .AddScoped<ICategoryService, CategoryService>()
+    .AddScoped<IBaseRepo<Category>, CategoryRepo>();
+
 
 var app = builder.Build();
 
@@ -61,38 +76,42 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 
+
+app.UseHttpsRedirection();
+app.MapControllers();
+
+
 // Use the custom logging middleware globally 
-app.UseMiddleware<LoggingMiddleware>();
-app.UseMiddleware<ErrorHandlerMiddleware>();
+// app.UseMiddleware<LoggingMiddleware>();
+// app.UseMiddleware<ErrorHandlerMiddleware>();
 
-app.MapGet("/", async context =>
+// app.MapGet("/", async context =>
 
-{
-    await context.Response.WriteAsync("Hello, world! This is a simple request without logging.");
-});
+// {
+//     await context.Response.WriteAsync("Hello, world! This is a simple request without logging.");
+// });
 
-app.MapGet("/logger", async context =>
+// app.MapGet("/logger", async context =>
 
-{
-    // var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-    // // // Log the incoming request
-    // logger.LogInformation("Handling request for the root URL '/'");
+// {
+//     // var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+//     // // // Log the incoming request
+//     // logger.LogInformation("Handling request for the root URL '/'");
 
-    // await context.Response.WriteAsync("Hello, world! This is a simple request with logging.");
+//     // await context.Response.WriteAsync("Hello, world! This is a simple request with logging.");
 
-    // // Log the completion of request handling
-    // logger.LogInformation("Finished handling request for the root URL '/'");
+//     // // Log the completion of request handling
+//     // logger.LogInformation("Finished handling request for the root URL '/'");
 
-    string param = null;
-    if (param == null)
-    {
-        throw new ArgumentNullException(nameof(param), "The parameter cannot be null.");
-    }
+//     string param = null;
+//     if (param == null)
+//     {
+//         throw new ArgumentNullException(nameof(param), "The parameter cannot be null.");
+//     }
 
-    await context.Response.WriteAsync("This won't be executed due to the exception.");
-});
+//     await context.Response.WriteAsync("This won't be executed due to the exception.");
+// });
 
 app.Run();

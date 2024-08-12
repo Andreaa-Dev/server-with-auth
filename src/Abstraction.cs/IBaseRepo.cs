@@ -4,7 +4,6 @@ using Backend.src.Shared;
 
 namespace Backend.src.Abstraction
 {
-
     public interface IBaseRepo<T> where T : BaseEntity
     {
         Task<IEnumerable<T>> GetAllAsync(GetAllOptions getAllOptions);

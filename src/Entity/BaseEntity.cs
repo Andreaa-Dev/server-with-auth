@@ -4,4 +4,5 @@ namespace Backend.src.Entity
     {
         public Guid Id { get; set; }
     }
+
 }
