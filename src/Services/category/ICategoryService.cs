@@ -3,8 +3,6 @@ using Backend.src.Shared;
 
 namespace Backend.src.Service.Impl
 {
-
-
     public interface ICategoryService
     {
         Task<CategoryReadDto> CreateOneAsync(CategoryCreateDto createDto);

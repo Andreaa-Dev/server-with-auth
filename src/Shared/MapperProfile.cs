@@ -13,5 +13,12 @@ public class MapperProfile : Profile
                    .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
 
 
+
+        CreateMap<Product, ProductReadDto>();
+        CreateMap<ProductCreateDto, Product>();
+        CreateMap<ProductUpdateDto, Product>()
+                   .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
+
+
     }
 }

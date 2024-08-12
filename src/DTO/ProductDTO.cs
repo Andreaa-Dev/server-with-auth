@@ -1,10 +1,9 @@
 using Backend.src.DTO;
 namespace Backend.src.DTO
 {
-
-
-    public class ProductReadDTO
+    public class ProductReadDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 
@@ -16,7 +15,7 @@ namespace Backend.src.DTO
     }
 
 
-    public class ProductCreateDTO
+    public class ProductCreateDto
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -29,7 +28,7 @@ namespace Backend.src.DTO
     }
 
     // only update few fields
-    public class ProductUpdateDTO
+    public class ProductUpdateDto
     {
         public string? Name { get; set; }
         public string? Description { get; set; }

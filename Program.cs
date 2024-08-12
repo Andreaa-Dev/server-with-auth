@@ -1,7 +1,5 @@
-using Microsoft.Extensions.Logging;
 using Npgsql;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Backend.src.Database;
 using Backend.src.Entity;
 using Backend.src.Service.Impl;
@@ -34,7 +32,9 @@ builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 // add DI services
 builder.Services
     .AddScoped<ICategoryService, CategoryService>()
-    .AddScoped<IBaseRepo<Category>, CategoryRepo>();
+    .AddScoped<IBaseRepo<Category>, CategoryRepo>()
+    .AddScoped<IProductService, ProductService>()
+    .AddScoped<IBaseRepo<Product>, ProductRepo>();
 
 
 var app = builder.Build();

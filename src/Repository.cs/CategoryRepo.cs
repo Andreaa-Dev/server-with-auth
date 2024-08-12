@@ -1,13 +1,9 @@
 using System;
-using Backend.src.Database;
-using Backend.src.Entity;
-using Backend.src.Abstraction;
-
-using System.Threading.Tasks;
-using System.Collections.Generic;
-
-using Microsoft.EntityFrameworkCore;
 using Backend.src.Shared;
+using Backend.src.Entity;
+using Backend.src.Database;
+using Backend.src.Abstraction;
+using Microsoft.EntityFrameworkCore;
 
 
 public class CategoryRepo : IBaseRepo<Category>
