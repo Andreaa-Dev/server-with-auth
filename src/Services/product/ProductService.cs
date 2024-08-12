@@ -7,8 +7,6 @@ using Backend.src.Service.Impl;
 
 namespace Backend.src.Service
 {
-
-
     public class ProductService : IProductService
     {
         protected readonly IBaseRepo<Product> _productRepo;

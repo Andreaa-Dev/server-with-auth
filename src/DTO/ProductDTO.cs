@@ -27,7 +27,6 @@ namespace Backend.src.DTO
         public Guid CategoryId { get; set; }
     }
 
-    // only update few fields
     public class ProductUpdateDto
     {
         public string? Name { get; set; }

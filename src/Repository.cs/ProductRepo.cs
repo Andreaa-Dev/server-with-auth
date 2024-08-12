@@ -37,7 +37,10 @@ public class ProductRepo : IBaseRepo<Product>
 
     public async Task<IEnumerable<Product>> GetAllAsync(GetAllOptions getAllOptions)
     {
-        return await _product.Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
+        return await _product.Skip(getAllOptions.Offset).Take(getAllOptions.Limit).Include(p => p.Category).ToArrayAsync();
+
+        // Load the Category explicitly
+        // await _product.Entry(createObject).Reference(p => p.Category).LoadAsync();
     }
 
 
