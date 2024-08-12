@@ -24,6 +24,36 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 
 var app = builder.Build();
 
+// Test database connection
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    try
+    {
+        // Attempt to connect to the database and check if we can access the Users table
+        dbContext.Database.OpenConnection();  // Open the connection
+        dbContext.Database.EnsureCreated();   // Ensures the database is created
+        var canConnect = dbContext.Database.CanConnect(); // Tests if the database is reachable
+
+        if (canConnect)
+        {
+            Console.WriteLine("Database connection successful.");
+        }
+        else
+        {
+            Console.WriteLine("Failed to connect to the database.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred while trying to connect to the database: {ex.Message}");
+    }
+    finally
+    {
+        dbContext.Database.CloseConnection(); // Close the connection
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

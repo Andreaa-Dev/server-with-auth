@@ -32,3 +32,9 @@
 /Users/andrea/teaching/sda-c/practice/backend/obj/Debug/net8.0/backend.genruntimeconfig.cache
 /Users/andrea/teaching/sda-c/practice/backend/obj/Debug/net8.0/ref/backend.dll
 /Users/andrea/teaching/sda-c/practice/backend/obj/Debug/net8.0/backend.sourcelink.json
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/EFCore.NamingConventions.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Npgsql.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
