@@ -1,15 +1,26 @@
 using Microsoft.Extensions.Logging;
 using Npgsql;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Backend.src.Database;
+using Backend.src.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add Npgsql database connection service
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddSingleton<NpgsqlConnection>(provider => new NpgsqlConnection(connectionString));
+// add database service
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
+dataSourceBuilder.MapEnum<Role>();
+var dataSource = dataSourceBuilder.Build();
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options
+    .UseNpgsql(dataSource);
+}
+);
 
 var app = builder.Build();
 
