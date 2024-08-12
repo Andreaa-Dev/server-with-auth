@@ -9,4 +9,5 @@ Notes
 ### Notes
 
 1. connection string in appsettings
-2. DTO: Data Transfer Objects
+2. DTO: Data Transfer Objects: transfer data between different layers of an application, particularly between the client and server
+3. DTO - response
