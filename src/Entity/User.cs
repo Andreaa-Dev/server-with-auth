@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Backend.src.Entity
 {
-    public class User
+    public class User : BaseEntity
     {
-        public Guid Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
         [Required]
         public string Email { get; set; }

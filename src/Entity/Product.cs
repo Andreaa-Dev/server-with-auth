@@ -6,9 +6,8 @@ using Backend.src.Entity;
 
 namespace Backend.src.Entity
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
