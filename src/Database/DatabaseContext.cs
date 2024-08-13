@@ -11,9 +11,9 @@ namespace Backend.src.Database
     {
         private IConfiguration _config;
 
-        public DbSet<User> Users { get; set; }
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<Category> Categories { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<Category> Category { get; set; }
 
         static DatabaseContext()
         {
