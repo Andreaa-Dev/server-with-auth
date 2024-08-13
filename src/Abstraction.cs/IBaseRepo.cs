@@ -11,6 +11,7 @@ namespace Backend.src.Abstraction
         Task<bool> UpdateOneAsync(T updateObject);
         Task<bool> DeleteOneAsync(T deleteObject);
         Task<T> CreateOneAsync(T createObject);
+
     }
 
 }

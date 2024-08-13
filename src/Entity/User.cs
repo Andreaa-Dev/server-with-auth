@@ -9,12 +9,20 @@ namespace Backend.src.Entity
 {
     public class User : BaseEntity
     {
-        public string Name { get; set; }
+        // data annotation
+        // [Required(ErrorMessage = "Email is required.")]
+        // default: The Email field is required.
         [Required]
-        public string Email { get; set; }
+        public string Name { get; set; }
+
+        [Required]
         [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
         public string Password { get; set; }
-        public Role Role { get; set; }
+
+        public Role Role { get; set; } = Role.Customer;
     }
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Role

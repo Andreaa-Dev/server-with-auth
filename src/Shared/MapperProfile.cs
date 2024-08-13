@@ -20,5 +20,9 @@ public class MapperProfile : Profile
                    .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
 
 
+        CreateMap<User, UserReadDto>();
+        CreateMap<UserCreateDto, User>();
+        CreateMap<UserUpdateDto, User>()
+                   .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
     }
 }

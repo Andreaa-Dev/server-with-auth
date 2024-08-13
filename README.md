@@ -21,3 +21,27 @@ Notes
 
 - update an existing object (foundCategory) with new data from another object (updateDto)
 - create new object (CategoryReadDto) from existing object (found category)
+
+### Questions
+
+- error handler
+- annotation
+  entity
+  [Key]
+  public Guid Id { get;set; }
+
+  [Required, StringLength(100)]
+  public string Name { get; set; }
+
+  [Required, ForeignKey("User")]
+  public Guid UserId { get; set; }
+
+unique? password?
+
+DTO
+[Required(ErrorMessage = "Password is required")]
+[StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
+[DataType(DataType.Password)]
+public string Password { get; set; }
+
+- appsettings.json - hide important data

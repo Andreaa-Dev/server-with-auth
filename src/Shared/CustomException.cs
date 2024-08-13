@@ -22,5 +22,15 @@ namespace Backend.src.Shared
         {
             return new CustomException(401, message);
         }
+
+        public static CustomException InternalError(string message = "Internal error")
+        {
+            return new CustomException(500, message);
+        }
+        public static CustomException InvalidData(string message = "Invalid data")
+        {
+            return new CustomException(412, message);
+        }
+
     }
 }
