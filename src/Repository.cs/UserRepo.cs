@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Backend.src.DTO;
 
 
-public class UserRepo : IBaseRepo<User>
+public class UserRepo : IUserRepo
 {
     protected readonly DbSet<User> _user;
     protected readonly DatabaseContext _databaseContext;
@@ -55,4 +55,11 @@ public class UserRepo : IBaseRepo<User>
     {
         return await _user.FirstOrDefaultAsync(u => u.Email == email);
     }
+
+
+}
+
+public interface IUserRepo : IBaseRepo<User>
+{
+    Task<User?> FindOneByEmailAsync(string email);
 }

@@ -11,6 +11,6 @@ namespace Backend.src.Service.Impl
         Task<IEnumerable<UserReadDto>> GetAllAsync(GetAllOptions getAllOptions);
         Task<UserReadDto> GetByIdAsync(Guid id);
         Task<bool> UpdateOneAsync(Guid id, UserUpdateDto updateDto);
-        Task<User> FindOneByEmailAsync(string email);
+        Task<User?> FindOneByEmailAsync(string email);
     }
 }

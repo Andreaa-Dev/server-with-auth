@@ -6,17 +6,22 @@ using Backend.src.Shared;
 using Backend.src.Service.Impl;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Backend.src.Service
 {
     public class UserService : IUserService
     {
-        protected readonly IBaseRepo<User> _userRepo;
+        protected readonly IUserRepo _userRepo;
+        private IConfiguration _config;
         protected readonly IMapper _mapper;
 
-        public UserService(IBaseRepo<User> UserRepo, IMapper mapper)
+        public UserService(IUserRepo UserRepo, IConfiguration config, IMapper mapper)
         {
             _userRepo = UserRepo;
+            _config = config;
             _mapper = mapper;
         }
 
@@ -42,8 +47,42 @@ namespace Backend.src.Service
             PasswordUtils.HashPassword(newUser.Password, out string hashedPassword, pepper);
             newUser.Password = hashedPassword;
 
-            return _mapper.Map<UserReadDto>(await _userRepo.SignUp(_mapper.Map<User>(newUser)));
+            // Replace SignUp with CreateOneAsync or another appropriate method
+            var createdUser = await _userRepo.CreateOneAsync(_mapper.Map<User>(newUser));
+            return _mapper.Map<UserReadDto>(createdUser);
         }
+
+        public async Task<string?> SignIn(UserSignInDto userSignIn)
+        {
+            User? user = await _userRepo.FindOneByEmailAsync(userSignIn.Email);
+            if (user is null) throw CustomException.NotFound("User does not exist");
+
+            byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
+            bool isCorrectPass = PasswordUtils.VerifyPassword(userSignIn.Password, user.Password, pepper);
+
+            if (!isCorrectPass) throw CustomException.InvalidData("Invalid data");
+
+            IEnumerable<Claim> claims = [
+                new Claim(ClaimTypes.Name, $"{user.Name} {user.Email}"),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim(ClaimTypes.Email, user.Email)
+            ];
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SigningKey"]!));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddDays(7),
+                signingCredentials: creds
+            );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return tokenString;
+        }
+
 
         public async Task<bool> DeleteOneASync(Guid id)
         {
@@ -82,5 +121,12 @@ namespace Backend.src.Service
             return await _userRepo.UpdateOneAsync(foundUser);
 
         }
+
+        public async Task<User?> FindOneByEmailAsync(string email)
+        {
+            return await _userRepo.FindOneByEmailAsync(email);
+        }
     }
+
+
 }
