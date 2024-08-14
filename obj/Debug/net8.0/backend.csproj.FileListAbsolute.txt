@@ -58,3 +58,7 @@
 /Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
 /Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/System.Security.Permissions.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Scrutor.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Swashbuckle.AspNetCore.Filters.dll
+/Users/andrea/teaching/sda-c/practice/backend/bin/Debug/net8.0/Swashbuckle.AspNetCore.Filters.Abstractions.dll

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.src.Controller
 {
-
     public class UserController : BaseController
     {
         protected readonly IUserService _userService;
@@ -13,12 +12,6 @@ namespace Backend.src.Controller
         public UserController(IUserService service)
         {
             _userService = service;
-        }
-        [HttpPost()]
-        public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromBody] UserCreateDto createDto)
-        {
-            var UserCreated = await _userService.CreateOneAsync(createDto);
-            return Ok(UserCreated);
         }
 
         [HttpGet()]
@@ -48,6 +41,14 @@ namespace Backend.src.Controller
             var isDeleted = await _userService.DeleteOneASync(id);
             System.Console.WriteLine(isDeleted);
             return Ok(isDeleted);
+        }
+
+        // register
+        [HttpPost("register")]
+        public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromBody] UserCreateDto userCreateDto)
+        {
+            var user = await _userService.CreateOneAsync(userCreateDto);
+            return Ok(user);
         }
     }
 }

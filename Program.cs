@@ -52,12 +52,16 @@ builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 builder.Services
     .AddScoped<ICategoryService, CategoryService>()
     .AddScoped<IBaseRepo<Category>, CategoryRepo>()
+
     .AddScoped<IProductService, ProductService>()
-    .AddScoped<IBaseRepo<Product>, ProductRepo>();
+    .AddScoped<IBaseRepo<Product>, ProductRepo>()
+
+      .AddScoped<IUserService, UserService>()
+    .AddScoped<IUserRepo, UserRepo>();
 
 // Add Identity services
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<DbContext>()
+    .AddEntityFrameworkStores<DatabaseContext>()
     .AddDefaultTokenProviders();
 
 // cors
@@ -76,27 +80,24 @@ builder.Services.AddCors(options =>
 });
 
 // Add JWT Authentication
-builder.Services
-.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
+// builder.Services
+// .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+// .AddJwtBearer(options =>
+// {
+//     options.TokenValidationParameters = new TokenValidationParameters
+//     {
+//         ValidateIssuer = true,
+//         ValidateAudience = true,
+//         ValidateLifetime = true,
+//         ValidateIssuerSigningKey = true,
+//         ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//         ValidAudience = builder.Configuration["Jwt:Audience"],
+//         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+//     };
+// });
 
 // Add Authorization
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-});
+// builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -113,10 +114,9 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<LoggingMiddleware>();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
-app.UseHttpsRedirection();
 // cors
 app.UseCors(MyAllowSpecificOrigins);
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.Run();

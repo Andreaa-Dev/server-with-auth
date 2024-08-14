@@ -4,7 +4,6 @@ using Backend.src.Entity;
 using Backend.src.Database;
 using Backend.src.Abstraction;
 using Microsoft.EntityFrameworkCore;
-using Backend.src.DTO;
 
 
 public class UserRepo : IUserRepo
@@ -51,15 +50,10 @@ public class UserRepo : IUserRepo
         return true;
     }
 
-    public async Task<User?> FindOneByEmailAsync(string email)
+    public async Task<User?> FindByEmailAsync(string email)
     {
         return await _user.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-
 }
 
-public interface IUserRepo : IBaseRepo<User>
-{
-    Task<User?> FindOneByEmailAsync(string email);
-}
