@@ -119,8 +119,8 @@ app.MapControllers();
 
 
 // Use the custom logging middleware globally 
-// app.UseMiddleware<LoggingMiddleware>();
-// app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 // app.MapGet("/", async context =>
 

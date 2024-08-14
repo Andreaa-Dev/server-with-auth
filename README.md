@@ -24,8 +24,8 @@ Notes
 
 ### Questions
 
-- error handler
-- annotation
+- error handler -
+- annotation:
   entity
   [Key]
   public Guid Id { get;set; }
@@ -45,3 +45,8 @@ DTO
 public string Password { get; set; }
 
 - appsettings.json - hide important data
+
+- deploy docker
+
+- feature: category, product, user
+- layer

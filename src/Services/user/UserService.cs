@@ -62,6 +62,7 @@ namespace Backend.src.Service
 
             if (!isCorrectPass) throw CustomException.InvalidData("Invalid data");
 
+            // create token 
             IEnumerable<Claim> claims = [
                 new Claim(ClaimTypes.Name, $"{user.Name} {user.Email}"),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
