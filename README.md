@@ -5,6 +5,7 @@ Notes
 1. Npgsql
 2. EFCore.NamingConventions
 3. Npgsql.EntityFrameworkCore.PostgreSQL
+4. Swashbuckle.AspNetCore.Filters
 
 ### Notes
 
