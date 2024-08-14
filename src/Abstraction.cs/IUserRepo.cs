@@ -10,8 +10,6 @@ namespace Backend.src.Abstraction
     {
         Task<User?> FindByEmailAsync(string email);
 
-        // Task<UserReadDto?> SignUp(UserCreateDto newUser);
-        // Task<string?> SignIn(UserSignInDto userSignIn);
 
     }
 }

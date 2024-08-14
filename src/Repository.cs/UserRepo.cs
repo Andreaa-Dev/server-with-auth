@@ -4,6 +4,7 @@ using Backend.src.Entity;
 using Backend.src.Database;
 using Backend.src.Abstraction;
 using Microsoft.EntityFrameworkCore;
+using Backend.src.DTO;
 
 
 public class UserRepo : IUserRepo
@@ -17,6 +18,8 @@ public class UserRepo : IUserRepo
         _user = databaseContext.Set<User>();
 
     }
+
+    // register
     public async Task<User> CreateOneAsync(User createObject)
     {
         await _user.AddAsync(createObject);
@@ -54,6 +57,8 @@ public class UserRepo : IUserRepo
     {
         return await _user.FirstOrDefaultAsync(u => u.Email == email);
     }
+
+
 
 }
 

@@ -22,6 +22,9 @@ namespace Backend.src.Entity
         [Required]
         public string Password { get; set; }
 
+        public byte[] Salt { get; set; }
+
+
         public Role Role { get; set; } = Role.Customer;
     }
     [JsonConverter(typeof(JsonStringEnumConverter))]

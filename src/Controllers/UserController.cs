@@ -45,10 +45,19 @@ namespace Backend.src.Controller
 
         // register
         [HttpPost("register")]
-        public async Task<ActionResult<UserReadDto>> CreateOneAsync([FromBody] UserCreateDto userCreateDto)
+        public async Task<ActionResult<UserReadDto>> RegisterUser([FromBody] UserCreateDto userCreateDto)
         {
             var user = await _userService.CreateOneAsync(userCreateDto);
             return Ok(user);
+        }
+
+
+        // login
+        [HttpPost("signIn")]
+        public async Task<ActionResult<string>> SignInUser([FromBody] UserSignInDto userSignInDto)
+        {
+            var token = await _userService.SignInAsync(userSignInDto);
+            return Ok(token);
         }
     }
 }

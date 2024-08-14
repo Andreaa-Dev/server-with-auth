@@ -3,8 +3,10 @@ using System.Text;
 
 public class PasswordUtils
 {
-    public static void HashPassword(string originalPassword,
-    out string hashedPassword, out byte[] salt)
+    public static void HashPassword(
+        string originalPassword,
+        out string hashedPassword,
+        out byte[] salt)
     {
         var hmac = new HMACSHA256();
         salt = hmac.Key;

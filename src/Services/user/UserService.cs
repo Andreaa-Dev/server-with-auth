@@ -23,45 +23,33 @@ namespace Backend.src.Service
             _mapper = mapper;
         }
 
+        // register
         public async Task<UserReadDto> CreateOneAsync(UserCreateDto createDto)
         {
-            var User = _mapper.Map<UserCreateDto, User>(createDto);
-            var UserCreated = await _userRepo.CreateOneAsync(User);
-            return _mapper.Map<User, UserReadDto>(UserCreated);
+            // check if user already exist also password
+            PasswordUtils.HashPassword(createDto.Password, out string hashedPassword, out byte[] salt);
+            var user = _mapper.Map<UserCreateDto, User>(createDto);
+            user.Password = hashedPassword;
+            user.Salt = salt;
+            user.Role = Role.Customer;
+            var savedUser = await _userRepo.CreateOneAsync(user);
+            return _mapper.Map<User, UserReadDto>(savedUser);
         }
-        // public async Task<UserReadDto?> SignUp(UserCreateDto newUser)
-        // {
 
-        //     User? user = await _userRepo.FindOneByEmailAsync(newUser.Email);
-        //     if (user is not null) throw CustomException.InvalidData("User already exists");
-
-        //     Regex regex = new Regex(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
-        //     if (!regex.IsMatch(newUser.Email)) throw CustomException.InvalidData("Invalid email format");
-
-        //     // hashed password
-
-        //     PasswordUtils.HashPassword(newUser.Password, out string hashedPassword, out byte[] salt);
-        //     newUser.Password = hashedPassword;
-
-        //     // Replace SignUp with CreateOneAsync or another appropriate method
-        //     var createdUser = await _userRepo.CreateOneAsync(_mapper.Map<User>(newUser));
-        //     return _mapper.Map<UserReadDto>(createdUser);
-        // }
-        // public async Task<string?> SignIn(UserSignInDto userSignIn)
-        // {
-        //     User? user = await _userRepo.FindOneByEmailAsync(userSignIn.Email);
-        //     if (user is null) throw CustomException.NotFound("User does not exist");
-
-        //     byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
-        //     bool isCorrectPass = PasswordUtils.VerifyPassword(userSignIn.Password, user.Password, pepper);
-
-        //     if (!isCorrectPass) throw CustomException.InvalidData("Invalid data");
-
-        //     // create token 
-        //     var tokenString = TokenUtils.GenerateToken(user);
-
-        //     return tokenString;
-        // }
+        public async Task<string> SignInAsync(UserSignInDto userSignIn)
+        {
+            var foundByEmail = await _userRepo.FindByEmailAsync(userSignIn.Email);
+            if (foundByEmail is null)
+            {
+                throw CustomException.UnAuthorized();
+            }
+            var passwordMatched = PasswordUtils.VerifyPassword(userSignIn.Password, foundByEmail.Password, foundByEmail.Salt);
+            if (passwordMatched)
+            {
+                return TokenUtils.GenerateToken(foundByEmail);
+            }
+            throw CustomException.UnAuthorized();
+        }
 
         public async Task<bool> DeleteOneASync(Guid id)
         {
