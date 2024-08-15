@@ -12,7 +12,7 @@ using Backend.src.Shared;
 
 namespace Backend.src.Repository
 {
-    public class OrderRepo : IBaseRepo<Order>
+    public class OrderRepo : IOrderRepo
     {
         protected readonly DbSet<Order> _orders;
         protected readonly DbSet<Product> _products;

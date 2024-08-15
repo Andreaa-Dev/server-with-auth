@@ -1,14 +1,13 @@
 using System;
+using Microsoft.EntityFrameworkCore;
 using Backend.src.Shared;
 using Backend.src.Entity;
 using Backend.src.Database;
 using Backend.src.Abstraction;
-using Microsoft.EntityFrameworkCore;
 
 namespace Backend.src.Repository
 {
-
-    public class OrderDetailRepo : IBaseRepo<OrderDetail>
+    public class OrderDetailRepo : IOrderDetailRepo
     {
         protected readonly DbSet<OrderDetail> _orderDetail;
         protected readonly DatabaseContext _databaseContext;

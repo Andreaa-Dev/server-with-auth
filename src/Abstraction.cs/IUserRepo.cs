@@ -8,6 +8,5 @@ namespace Backend.src.Abstraction
     {
         Task<User?> FindByEmailAsync(string email);
 
-
     }
 }
