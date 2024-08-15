@@ -1,5 +1,6 @@
+using Backend.src.Entity;
 
-namespace Backend.src.Entity
+namespace Backend.src.DTO
 {
     public class OrderCreateDto
     {
@@ -8,7 +9,7 @@ namespace Backend.src.Entity
     public class OrderReadDto
     {
         public Guid UserId { get; set; }
-        public User User { get; set; }
+        public User UserDetail { get; set; }
         public IEnumerable<OrderDetailReadDto> OrderDetails { get; set; }
     }
 }

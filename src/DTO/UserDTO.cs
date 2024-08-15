@@ -21,7 +21,6 @@ namespace Backend.src.DTO
         // default role as customer
     }
 
-
     public class UserUpdateDto
     {
         public string? Name { get; set; }
