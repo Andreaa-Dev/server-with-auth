@@ -23,6 +23,13 @@ Notes
 - update an existing object (foundCategory) with new data from another object (updateDto)
 - create new object (CategoryReadDto) from existing object (found category)
 
+### Migration
+
+- dotnet ef migrations add InitialCreate
+- dotnet ef database update
+
+* remember: dotnet add package Microsoft.EntityFrameworkCore.Design (same version with .NET)
+
 ### Questions
 
 - error handler -

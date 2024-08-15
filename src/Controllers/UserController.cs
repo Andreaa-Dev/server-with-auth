@@ -3,6 +3,7 @@ using Backend.src.Service.Impl;
 using Backend.src.Shared;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Backend.src.Controller
 {
     public class UserController : BaseController
@@ -57,6 +58,7 @@ namespace Backend.src.Controller
         public async Task<ActionResult<string>> SignInUser([FromBody] UserSignInDto userSignInDto)
         {
             var token = await _userService.SignInAsync(userSignInDto);
+            System.Console.WriteLine($"token:{token}");
             return Ok(token);
         }
     }

@@ -2,6 +2,7 @@ using Backend.src.DTO;
 using Backend.src.Service.Impl;
 using Backend.src.Shared;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend.src.Controller
 {
@@ -21,7 +22,10 @@ namespace Backend.src.Controller
             return Ok(productCreated);
         }
 
+
         [HttpGet()]
+        //[Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var productList = await _productService.GetAllAsync(getAllOptions);

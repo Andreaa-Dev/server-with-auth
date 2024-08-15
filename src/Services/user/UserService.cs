@@ -46,7 +46,8 @@ namespace Backend.src.Service
             var passwordMatched = PasswordUtils.VerifyPassword(userSignIn.Password, foundByEmail.Password, foundByEmail.Salt);
             if (passwordMatched)
             {
-                return TokenUtils.GenerateToken(foundByEmail);
+                var tokenUtils = new TokenUtils(_config);
+                return tokenUtils.GenerateToken(foundByEmail);
             }
             throw CustomException.UnAuthorized();
         }

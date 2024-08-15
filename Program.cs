@@ -56,7 +56,7 @@ builder.Services
     .AddScoped<IProductService, ProductService>()
     .AddScoped<IBaseRepo<Product>, ProductRepo>()
 
-      .AddScoped<IUserService, UserService>()
+    .AddScoped<IUserService, UserService>()
     .AddScoped<IUserRepo, UserRepo>();
 
 // Add Identity services
@@ -97,11 +97,16 @@ builder.Services
 });
 
 // Add Authorization
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(
+    options =>
+    {
+        options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    }
+    );
 
 var app = builder.Build();
 
-app.MapControllers();
+// app.MapControllers();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -118,5 +123,7 @@ app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();

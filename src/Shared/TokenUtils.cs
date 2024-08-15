@@ -6,12 +6,12 @@ using Microsoft.IdentityModel.Tokens;
 
 public class TokenUtils
 {
-    private static IConfiguration _config;
+    private readonly IConfiguration _config;
     public TokenUtils(IConfiguration config)
     {
         _config = config;
     }
-    public static string GenerateToken(User user)
+    public string GenerateToken(User user)
     {
         var issuer = _config.GetSection("Jwt:Issuer").Value;
         var claims = new List<Claim>{

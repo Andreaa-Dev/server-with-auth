@@ -7,6 +7,7 @@ public class MapperProfile : Profile
     public MapperProfile()
     {
 
+        //CreateMap<Category, CategoryReadDto>().ReserveMap();
         CreateMap<Category, CategoryReadDto>();
         CreateMap<CategoryCreateDto, Category>();
         CreateMap<CategoryUpdateDto, Category>()

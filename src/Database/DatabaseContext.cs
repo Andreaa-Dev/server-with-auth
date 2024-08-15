@@ -34,6 +34,8 @@ namespace Backend.src.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresEnum<Role>();
+
+            // fluent api ????? => remove 
             // one to many : Product - Category
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
