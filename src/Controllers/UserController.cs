@@ -44,6 +44,7 @@ namespace Backend.src.Controller
             return Ok(isDeleted);
         }
 
+
         // register
         [HttpPost("register")]
         public async Task<ActionResult<UserReadDto>> RegisterUser([FromBody] UserCreateDto userCreateDto)
@@ -61,5 +62,7 @@ namespace Backend.src.Controller
             System.Console.WriteLine($"token:{token}");
             return Ok(token);
         }
+
+        // admin
     }
 }

@@ -23,6 +23,7 @@ namespace Backend.src.Service
             _mapper = mapper;
         }
 
+        // TO DO: create admin
         // register
         public async Task<UserReadDto> CreateOneAsync(UserCreateDto createDto)
         {
@@ -35,7 +36,7 @@ namespace Backend.src.Service
             var savedUser = await _userRepo.CreateOneAsync(user);
             return _mapper.Map<User, UserReadDto>(savedUser);
         }
-
+        // sign in
         public async Task<string> SignInAsync(UserSignInDto userSignIn)
         {
             var foundByEmail = await _userRepo.FindByEmailAsync(userSignIn.Email);

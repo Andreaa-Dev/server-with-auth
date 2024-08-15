@@ -24,8 +24,9 @@ namespace Backend.src.Entity
 
         public byte[] Salt { get; set; }
 
-
         public Role Role { get; set; } = Role.Customer;
+        public ICollection<Order> Orders { get; set; }
+
     }
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Role
