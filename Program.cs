@@ -13,6 +13,7 @@ using Backend.src.Entity;
 using Backend.src.Service.Impl;
 using Backend.src.Service;
 using Backend.src.Abstraction;
+using Backend.src.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,20 +32,25 @@ builder.Services.AddSwaggerGen(options =>
             Scheme = "bearer"
         }
         );
-        options.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    });
+
+        // this logic is add to CustomAuthOperationFilter 
+        // options.AddSecurityRequirement(new OpenApiSecurityRequirement
+        // {
+        //     {
+        //     new OpenApiSecurityScheme
+        //     {
+        //         Reference = new OpenApiReference
+        //         {
+        //             Type = ReferenceType.SecurityScheme,
+        //             Id = "Bearer"
+        //         }
+        //     },
+        //     Array.Empty<string>()
+        // }
+        // });
+
+        // Register the custom operation filter
+        options.OperationFilter<CustomAuthOperationFilter>();
     });
 
 // add controllers
