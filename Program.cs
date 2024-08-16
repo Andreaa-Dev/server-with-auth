@@ -1,4 +1,5 @@
 using Npgsql;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.EntityFrameworkCore;
 using Backend.src.Database;
 using Backend.src.Entity;
@@ -35,25 +36,27 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddControllers();
 
 // add database service
-// var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
-// dataSourceBuilder.MapEnum<Role>();
-// var dataSource = dataSourceBuilder.Build();
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
+dataSourceBuilder.MapEnum<Role>();
+
+//var dataSource = dataSourceBuilder.Build();
+
+builder.Services.AddDbContext<DatabaseContext>(options =>
+{
+    options
+    .UseNpgsql(dataSourceBuilder.Build());
+}
+);
 
 // builder.Services.AddDbContext<DatabaseContext>(options =>
 // {
-//     options
-//     .UseNpgsql(dataSource);
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("Local"), npgsqlOptions =>
+//     {
+//         // Map enums to PostgreSQL
+//         npgsqlOptions.MapEnum<Role>();
+//     });
 // }
 // );
-builder.Services.AddDbContext<DatabaseContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Local"), npgsqlOptions =>
-    {
-        // Map enums to PostgreSQL
-        npgsqlOptions.MapEnum<Role>();
-    });
-}
-);
 
 
 // add automapper service
