@@ -1,17 +1,18 @@
 using Npgsql;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+
+using System.Text;
+using Swashbuckle.AspNetCore.Filters;
+
 using Backend.src.Database;
 using Backend.src.Entity;
 using Backend.src.Service.Impl;
 using Backend.src.Service;
 using Backend.src.Abstraction;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,16 +20,25 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
     {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend API", Version = "v1" });
         options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
         {
             Description = "Bearer token authentication",
             Name = "Authorization",
             In = ParameterLocation.Header,
-            Scheme = "Bearer"
+            Scheme = "Bearer",
+            // it works - remember to add Bearer 
+            // Type = SecuritySchemeType.ApiKey,
+            // BearerFormat = "JWT"
         }
         );
-        // TO DO : test auth in swagger
-        // Array.Empty<string>()
+        // it defines an empty set of scopes
+        // This is often used when no specific scopes are required for the security scheme
+        // meaning that the API doesn’t enforce any specific permissions or roles.
+        // Array.Empty<string>();
+
+        // This applies a filter to all API operations to include the security requirement globally.
+        // This means that all endpoints will have the specified security scheme applied to them.
         options.OperationFilter<SecurityRequirementsOperationFilter>();
     });
 
@@ -38,25 +48,12 @@ builder.Services.AddControllers();
 // add database service
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
 dataSourceBuilder.MapEnum<Role>();
-
-//var dataSource = dataSourceBuilder.Build();
-
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
     options
     .UseNpgsql(dataSourceBuilder.Build());
 }
 );
-
-// builder.Services.AddDbContext<DatabaseContext>(options =>
-// {
-//     options.UseNpgsql(builder.Configuration.GetConnectionString("Local"), npgsqlOptions =>
-//     {
-//         // Map enums to PostgreSQL
-//         npgsqlOptions.MapEnum<Role>();
-//     });
-// }
-// );
 
 
 // add automapper service
