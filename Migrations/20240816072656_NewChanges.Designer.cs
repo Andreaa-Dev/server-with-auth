@@ -4,6 +4,7 @@ using Backend.src.Database;
 using Backend.src.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240816072656_NewChanges")]
+    partial class NewChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,6 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -52,10 +51,6 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -76,10 +71,6 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
 
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uuid")
@@ -113,10 +104,6 @@ namespace backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("category_id");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text")
@@ -142,18 +129,6 @@ namespace backend.Migrations
                         .HasDatabaseName("ix_product_category_id");
 
                     b.ToTable("product", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("1caec261-2634-4b15-8371-e19f9946efa3"),
-                            CategoryId = new Guid("dcee6254-9093-401a-8394-77d2dbc9f922"),
-                            CreatedAt = new DateTime(2024, 8, 16, 8, 5, 21, 150, DateTimeKind.Utc).AddTicks(2680),
-                            Description = "test",
-                            Inventory = 2,
-                            Name = "p2",
-                            Price = 12.199999999999999
-                        });
                 });
 
             modelBuilder.Entity("Backend.src.Entity.User", b =>
@@ -162,10 +137,6 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
 
                     b.Property<string>("Email")
                         .IsRequired()

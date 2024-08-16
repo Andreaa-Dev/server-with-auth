@@ -26,7 +26,8 @@ builder.Services.AddSwaggerGen(options =>
             Scheme = "Bearer"
         }
         );
-
+        // TO DO : test auth in swagger
+        // Array.Empty<string>()
         options.OperationFilter<SecurityRequirementsOperationFilter>();
     });
 
@@ -34,16 +35,26 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddControllers();
 
 // add database service
-var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
-dataSourceBuilder.MapEnum<Role>();
-var dataSource = dataSourceBuilder.Build();
+// var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
+// dataSourceBuilder.MapEnum<Role>();
+// var dataSource = dataSourceBuilder.Build();
 
+// builder.Services.AddDbContext<DatabaseContext>(options =>
+// {
+//     options
+//     .UseNpgsql(dataSource);
+// }
+// );
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options
-    .UseNpgsql(dataSource);
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Local"), npgsqlOptions =>
+    {
+        // Map enums to PostgreSQL
+        npgsqlOptions.MapEnum<Role>();
+    });
 }
 );
+
 
 // add automapper service
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
@@ -59,10 +70,10 @@ builder.Services
     .AddScoped<IUserService, UserService>()
     .AddScoped<IUserRepo, UserRepo>();
 
-// Add Identity services
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<DatabaseContext>()
-    .AddDefaultTokenProviders();
+// Add Identity services: only the default
+// builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+//     .AddEntityFrameworkStores<DatabaseContext>()
+//     .AddDefaultTokenProviders();
 
 // cors
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";

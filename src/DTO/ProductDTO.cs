@@ -12,6 +12,9 @@ namespace Backend.src.DTO
 
         public int Inventory { get; set; }
 
+        public DateTime CreatedAt { get; set; }
+
+
         public CategoryReadDto Category { get; set; }
     }
 
