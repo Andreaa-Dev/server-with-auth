@@ -21,20 +21,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
     {
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend API", Version = "v1" });
-        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
             Description = "Please enter token",
             Name = "Authorization",
-            // Type = SecuritySchemeType.ApiKey,
             Type = SecuritySchemeType.Http,
             BearerFormat = "JWT",
             Scheme = "bearer"
         }
         );
         options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
         {
+            {
             new OpenApiSecurityScheme
             {
                 Reference = new OpenApiReference
@@ -46,7 +45,6 @@ builder.Services.AddSwaggerGen(options =>
             Array.Empty<string>()
         }
     });
-        //options.OperationFilter<SecurityRequirementsOperationFilter>();
     });
 
 // add controllers
@@ -77,7 +75,7 @@ builder.Services
     .AddScoped<IUserService, UserService>()
     .AddScoped<IUserRepo, UserRepo>();
 
-// Add Identity services: only the default
+// Add Identity services: only for the default admin, token and password
 // builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 //     .AddEntityFrameworkStores<DatabaseContext>()
 //     .AddDefaultTokenProviders();
