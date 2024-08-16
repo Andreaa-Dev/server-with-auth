@@ -23,23 +23,30 @@ builder.Services.AddSwaggerGen(options =>
         options.SwaggerDoc("v1", new OpenApiInfo { Title = "Backend API", Version = "v1" });
         options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
         {
-            Description = "Bearer token authentication",
-            Name = "Authorization",
             In = ParameterLocation.Header,
-            Scheme = "Bearer",
-            // it works - remember to add Bearer 
+            Description = "Please enter token",
+            Name = "Authorization",
             // Type = SecuritySchemeType.ApiKey,
-            // BearerFormat = "JWT"
+            Type = SecuritySchemeType.Http,
+            BearerFormat = "JWT",
+            Scheme = "bearer"
         }
         );
-        // it defines an empty set of scopes
-        // This is often used when no specific scopes are required for the security scheme
-        // meaning that the API doesn’t enforce any specific permissions or roles.
-        // Array.Empty<string>();
-
-        // This applies a filter to all API operations to include the security requirement globally.
-        // This means that all endpoints will have the specified security scheme applied to them.
-        options.OperationFilter<SecurityRequirementsOperationFilter>();
+        options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+        //options.OperationFilter<SecurityRequirementsOperationFilter>();
     });
 
 // add controllers
