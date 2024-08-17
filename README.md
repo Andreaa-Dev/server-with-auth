@@ -23,6 +23,10 @@ Notes
 - update an existing object (foundCategory) with new data from another object (updateDto)
 - create new object (CategoryReadDto) from existing object (found category)
 
+9. folder division by 2 ways: feature (category, product, user) and layer (controller, service)
+
+10. appsettings.json - hide important data. add to gitignore
+
 ### Migration
 
 - dotnet ef migrations add InitialCreate
@@ -30,8 +34,9 @@ Notes
 
 * remember: dotnet add package Microsoft.EntityFrameworkCore.Design (same version with .NET)
 
-### Questions
+### TO DO
 
+- admin: 3 ways
 - error handler in service or controller?
 - annotation:
   entity
@@ -52,8 +57,4 @@ DTO
 [DataType(DataType.Password)]
 public string Password { get; set; }
 
-- appsettings.json - hide important data. add to gitignore
-
 - deploy docker
-
-- folder division by 2 ways: feature (category, product, user) and layer (controller, service)
