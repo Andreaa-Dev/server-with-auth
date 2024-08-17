@@ -29,41 +29,17 @@ namespace Backend.src.Repository
         // ???
         public async Task<Order> CreateOneAsync(Order createObject)
         {
-            using (var transaction = await _databaseContext.Database.BeginTransactionAsync())
+            await _orders.AddAsync(createObject);
+            await _databaseContext.SaveChangesAsync();
+
+            await _orders.Entry(createObject).Collection(o => o.OrderDetails).LoadAsync();
+            // Optionally, load related Products for each OrderDetail
+            foreach (var detail in createObject.OrderDetails)
             {
-                try
-                {
-
-                    foreach (OrderDetail detail in createObject.OrderDetails)
-                    {
-                        var foundProduct = await _products.FindAsync(detail.ProductId);
-                        if (foundProduct is null)
-                        {
-                            throw CustomException.NotFound($"ProductId {detail.ProductId} is not found");
-                        }
-                        else if (detail.Quantity > foundProduct.Inventory)
-                        {
-                            throw CustomException.BadRequest("Do not have enough quantity");
-                        }
-                        else
-                        {
-                            foundProduct.Inventory -= detail.Quantity;
-                            await _databaseContext.SaveChangesAsync();
-                            await _orderDetails.AddAsync(detail);
-                        }
-
-                        await _orders.AddAsync(createObject);
-                        await _databaseContext.SaveChangesAsync();
-                        await transaction.CommitAsync();
-                    }
-                    return createObject;
-                }
-                catch (CustomException e)
-                {
-                    await transaction.RollbackAsync();
-                    throw;
-                }
+                await _databaseContext.Entry(detail).Reference(od => od.Product).LoadAsync();
             }
+            return createObject;
+
         }
 
         public async Task<bool> DeleteOneAsync(Order deleteObject)

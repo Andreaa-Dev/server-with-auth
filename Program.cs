@@ -14,6 +14,7 @@ using Backend.src.Service.Impl;
 using Backend.src.Service;
 using Backend.src.Abstraction;
 using Backend.src.Shared;
+using Backend.src.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,7 +80,14 @@ builder.Services
     .AddScoped<IBaseRepo<Product>, ProductRepo>()
 
     .AddScoped<IUserService, UserService>()
-    .AddScoped<IUserRepo, UserRepo>();
+    .AddScoped<IUserRepo, UserRepo>()
+
+      .AddScoped<IOrderDetailService, OrderDetailService>()
+    .AddScoped<IOrderDetailRepo, OrderDetailRepo>()
+
+
+    .AddScoped<IOrderService, OrderService>()
+    .AddScoped<IOrderRepo, OrderRepo>();
 
 // Add Identity services: only for the default admin, token and password
 // builder.Services.AddIdentity<IdentityUser, IdentityRole>()

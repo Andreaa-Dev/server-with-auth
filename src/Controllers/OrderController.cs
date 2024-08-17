@@ -12,11 +12,11 @@ namespace Backend.src.Controller
 {
     public class OrderController : BaseController
     {
-        protected readonly IOrderService _service;
+        protected readonly IOrderService _orderService;
         protected readonly IAuthorizationService _authorization;
-        public OrderController(IOrderService service, IAuthorizationService authorization)
+        public OrderController(IOrderService orderService, IAuthorizationService authorization)
         {
-            _service = service;
+            _orderService = orderService;
             _authorization = authorization;
         }
 
@@ -25,10 +25,22 @@ namespace Backend.src.Controller
         public async Task<ActionResult<OrderReadDto>> CreateOneAsync([FromBody] OrderCreateDto orderCreateDto)
         {
 
+            // exact user information
             var authenticatedClaims = HttpContext.User;
+            // claim has userId
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             var userGuid = new Guid(userId);
-            return await _service.CreateOneAsync(userGuid, orderCreateDto);
+            return await _orderService.CreateOneAsync(userGuid, orderCreateDto);
+        }
+
+
+        [HttpGet("{id:guid}")]
+        //[Authorize(Roles = "Admin")]
+
+        public async Task<ActionResult<OrderReadDto>> GetByIdAsync([FromRoute] Guid id)
+        {
+            var product = await _orderService.GetByIdAsync(id);
+            return Ok(product);
         }
     }
 }

@@ -26,7 +26,6 @@ namespace Backend.src.Service.Impl
             await _orderRepo.CreateOneAsync(order);
             return _mapper.Map<Order, OrderReadDto>(order);
         }
-
         public async Task<bool> DeleteOneAsync(Guid id)
         {
             var order = await _orderRepo.GetByIdAsync(id);

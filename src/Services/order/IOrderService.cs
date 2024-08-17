@@ -13,6 +13,7 @@ namespace Backend.src.Service
         Task<bool> DeleteOneAsync(Guid id);
         Task<IEnumerable<OrderReadDto>> GetAllAsync(GetAllOptions getAllOptions);
         Task<OrderReadDto> GetByIdAsync(Guid id);
-        //  Task<bool> UpdateOneAsync(Guid id, CategoryUpdateDto updateDto);
+
+        //Task<bool> UpdateOneAsync(Guid id, CategoryUpdateDto updateDto);
     }
 }

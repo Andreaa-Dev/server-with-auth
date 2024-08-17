@@ -32,7 +32,7 @@ Notes
 
 ### Questions
 
-- error handler -
+- error handler in service or controller?
 - annotation:
   entity
   [Key]
@@ -52,9 +52,8 @@ DTO
 [DataType(DataType.Password)]
 public string Password { get; set; }
 
-- appsettings.json - hide important data
+- appsettings.json - hide important data. add to gitignore
 
 - deploy docker
 
-- feature: category, product, user
-- layer
+- folder division by 2 ways: feature (category, product, user) and layer (controller, service)

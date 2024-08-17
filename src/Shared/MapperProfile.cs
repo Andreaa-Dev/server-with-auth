@@ -25,5 +25,16 @@ public class MapperProfile : Profile
         CreateMap<UserCreateDto, User>();
         CreateMap<UserUpdateDto, User>()
                    .ForAllMembers(opts => opts.Condition((src, dest, srcProperty) => srcProperty != null));
+
+
+        // OrderDetail mappings
+        CreateMap<OrderDetail, OrderDetailReadDto>();
+        CreateMap<OrderDetailCreateDto, OrderDetail>();
+
+        // Order mappings
+        CreateMap<Order, OrderReadDto>();
+        CreateMap<OrderCreateDto, Order>()
+            .ForMember(dest => dest.OrderDetails, opt => opt.MapFrom(src => src.OrderDetails));
+
     }
 }
