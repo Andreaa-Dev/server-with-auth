@@ -64,7 +64,14 @@ namespace Backend.src.Controller
         }
 
         // admin
+        [HttpPost("create-admin")]
+        public async Task<ActionResult<UserReadDto>> CreateAdminAsync([FromBody] UserCreateDto userCreateDto)
+        {
+            var user = await _userService.CreateAdminAsync(userCreateDto);
+            return Ok(user);
+        }
 
+        // make someone admin
 
     }
 }

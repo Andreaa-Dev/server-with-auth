@@ -79,7 +79,6 @@ namespace Backend.src.Service
             return _mapper.Map<User, UserReadDto>(foundUser);
         }
 
-
         public async Task<bool> UpdateOneAsync(Guid id, UserUpdateDto updateDto)
         {
             var foundUser = await _userRepo.GetByIdAsync(id);
@@ -103,6 +102,20 @@ namespace Backend.src.Service
 
         }
 
+
+        // should only run 1 time
+        public async Task<UserReadDto> CreateAdminAsync(UserCreateDto createDto)
+        {
+            PasswordUtils.HashPassword(createDto.Password, out string hashedPassword, out byte[] salt);
+            var user = _mapper.Map<UserCreateDto, User>(createDto);
+            user.Password = hashedPassword;
+            user.Salt = salt;
+            user.Role = Role.Admin;
+            var savedUser = await _userRepo.CreateOneAsync(user);
+            return _mapper.Map<User, UserReadDto>(savedUser);
+        }
+
+        // make other become admin
     }
 
 
