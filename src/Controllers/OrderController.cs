@@ -19,6 +19,7 @@ namespace Backend.src.Controller
             _service = service;
             _authorization = authorization;
         }
+
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<OrderReadDto>> CreateOneAsync([FromBody] OrderCreateDto orderCreateDto)
@@ -27,7 +28,6 @@ namespace Backend.src.Controller
             var authenticatedClaims = HttpContext.User;
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             var userGuid = new Guid(userId);
-
             return await _service.CreateOneAsync(userGuid, orderCreateDto);
         }
     }

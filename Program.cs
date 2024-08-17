@@ -67,7 +67,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 );
 
 
-// add automapper service
+// add auto-mapper service
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
 // add DI services
@@ -108,7 +108,8 @@ builder.Services
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
+})
+.AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {

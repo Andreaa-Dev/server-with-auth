@@ -14,6 +14,7 @@ namespace Backend.src.DTO
 
         public DateTime CreatedAt { get; set; }
 
+        // public Guid CategoryId { get; set; }
 
         public CategoryReadDto Category { get; set; }
     }

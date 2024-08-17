@@ -43,7 +43,11 @@ public class ProductRepo : IBaseRepo<Product>
 
     public async Task<Product?> GetByIdAsync(Guid id)
     {
-        return await _product.FindAsync(id);
+        // use FindAsync can get product by id but doesn't support including related entities
+        // return await _product.FindAsync(id);
+
+        return await _product.Include(p => p.Category)
+                         .FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<bool> UpdateOneAsync(Product updateObject)
