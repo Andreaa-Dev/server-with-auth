@@ -31,6 +31,22 @@ Notes
 - 410 UnAuthorized - users do not log in
 - 500 Internal server error - send request with wrong methods/endpoint
 - 400 Bad request (client error response) - create usr with same email
+- 412 InvalidData
+
+13. DTO vs Entity
+
+- DTOs: These are designed specifically for transferring data between different layers, such as between the client and server or between services. DTOs often have validation annotations to ensure that the data being sent or received is correct and meets business rules before it reaches the business logic or database layer.
+- DTOs: Use data annotations to enforce input validation, format data for display, and control how data is exposed through your API or UI.
+  Example:
+  [Required(ErrorMessage = "Password is required")]
+  [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
+  [DataType(DataType.Password)]
+
+- Entities: These represent the actual data structure in your database, and data annotations here ensure that the data is valid and consistent when it's being persisted or retrieved from the database. They also map the entity to the database schema.
+- Entities: Use data annotations to define schema-related constraints, relationships, and database-specific configurations.
+  Example:
+  [Key]
+  [Required, ForeignKey("User")]
 
 ### Migration
 
@@ -41,23 +57,6 @@ Notes
 
 ### TO DO
 
-- annotation:
-  entity
-  [Key]
-  public Guid Id { get;set; }
-
-  [Required, StringLength(100)]
-  public string Name { get; set; }
-
-  [Required, ForeignKey("User")]
-  public Guid UserId { get; set; }
-
-unique? password?
-
-DTO
-[Required(ErrorMessage = "Password is required")]
-[StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
-[DataType(DataType.Password)]
-public string Password { get; set; }
+- change folder
 
 - deploy docker
