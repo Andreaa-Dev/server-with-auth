@@ -23,7 +23,6 @@ namespace Backend.src.Service
             _mapper = mapper;
         }
 
-        // TO DO: create admin
         // register
         public async Task<UserReadDto> CreateOneAsync(UserCreateDto createDto)
         {
@@ -116,6 +115,19 @@ namespace Backend.src.Service
         }
 
         // make other become admin
+        public async Task<bool> UpdateAdminAsync(Guid userId)
+        {
+            var foundUser = await _userRepo.GetByIdAsync(userId);
+            if (foundUser == null)
+            {
+                return false;
+            }
+            foundUser.Role = Role.Admin;
+
+            return await _userRepo.UpdateOneAsync(foundUser);
+
+        }
+
     }
 
 

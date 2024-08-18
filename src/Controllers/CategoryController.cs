@@ -14,14 +14,15 @@ namespace Backend.src.Controller
         {
             _categoryService = service;
         }
-        [HttpPost()]
+
+        [HttpPost]
         public async Task<ActionResult<CategoryReadDto>> CreateOneAsync([FromBody] CategoryCreateDto createDto)
         {
             var categoryCreated = await _categoryService.CreateOneAsync(createDto);
             return Ok(categoryCreated);
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<CategoryReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var categoryList = await _categoryService.GetAllAsync(getAllOptions);

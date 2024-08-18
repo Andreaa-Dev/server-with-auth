@@ -62,8 +62,7 @@ var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetCon
 dataSourceBuilder.MapEnum<Role>();
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
-    options
-    .UseNpgsql(dataSourceBuilder.Build());
+    options.UseNpgsql(dataSourceBuilder.Build());
 }
 );
 

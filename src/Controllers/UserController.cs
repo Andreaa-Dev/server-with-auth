@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using Backend.src.DTO;
 using Backend.src.Service.Impl;
 using Backend.src.Shared;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -15,7 +17,7 @@ namespace Backend.src.Controller
             _userService = service;
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var UserList = await _userService.GetAllAsync(getAllOptions);
@@ -72,6 +74,15 @@ namespace Backend.src.Controller
         }
 
         // make someone admin
+        [Authorize]
+        [HttpPatch("make-admin/{id:guid}")]
+        public async Task<ActionResult<UserReadDto>> UpdateAdminAsync([FromRoute] Guid id)
+        {
+
+            var user = await _userService.UpdateAdminAsync(id);
+            return Ok(user);
+        }
+
 
     }
 }

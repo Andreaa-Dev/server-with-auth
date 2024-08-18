@@ -16,7 +16,7 @@ namespace Backend.src.Controller
         {
             _orderDetailService = service;
         }
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDetailReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
 

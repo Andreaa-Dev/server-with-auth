@@ -37,10 +37,10 @@ namespace Backend.src.Controller
         [HttpGet("{id:guid}")]
         //[Authorize(Roles = "Admin")]
 
-        public async Task<ActionResult<OrderReadDto>> GetByIdAsync([FromRoute] Guid id)
+        public async Task<ActionResult<bool>> GetByIdAsync([FromRoute] Guid id)
         {
-            var product = await _orderService.GetByIdAsync(id);
-            return Ok(product);
+            var isAdmin = await _orderService.GetByIdAsync(id);
+            return Ok(isAdmin);
         }
     }
 }

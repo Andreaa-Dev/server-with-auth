@@ -15,7 +15,7 @@ namespace Backend.src.Controller
         {
             _productService = service;
         }
-        [HttpPost()]
+        [HttpPost]
         public async Task<ActionResult<ProductReadDto>> CreateOneAsync([FromBody] ProductCreateDto createDto)
         {
             var productCreated = await _productService.CreateOneAsync(createDto);
@@ -23,7 +23,7 @@ namespace Backend.src.Controller
         }
 
 
-        [HttpGet()]
+        [HttpGet]
         //[Authorize]
         public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {

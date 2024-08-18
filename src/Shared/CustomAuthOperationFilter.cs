@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace Backend.src.Shared
 {
-
-
     public class CustomAuthOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)

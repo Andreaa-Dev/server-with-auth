@@ -26,12 +26,12 @@ namespace Backend.src.Repository
             _products = _databaseContext.Set<Product>();
         }
 
-        // ???
         public async Task<Order> CreateOneAsync(Order createObject)
         {
             await _orders.AddAsync(createObject);
             await _databaseContext.SaveChangesAsync();
 
+            // order detail is array/collection
             await _orders.Entry(createObject).Collection(o => o.OrderDetails).LoadAsync();
             // Optionally, load related Products for each OrderDetail
             foreach (var detail in createObject.OrderDetails)
