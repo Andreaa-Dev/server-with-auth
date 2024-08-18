@@ -23,10 +23,21 @@ namespace Backend.src.Service
             _mapper = mapper;
         }
 
+        public async Task<bool> EmailExistsAsync(string email)
+        {
+            return await _userRepo.EmailExistsAsync(email);
+        }
+
         // register
         public async Task<UserReadDto> CreateOneAsync(UserCreateDto createDto)
         {
+            var isExisted = await _userRepo.EmailExistsAsync(createDto.Email);
             // check if user already exist also password
+            if (isExisted)
+            {
+                throw CustomException.BadRequest("The provided email address is already in use.");
+            }
+
             PasswordUtils.HashPassword(createDto.Password, out string hashedPassword, out byte[] salt);
             var user = _mapper.Map<UserCreateDto, User>(createDto);
             user.Password = hashedPassword;

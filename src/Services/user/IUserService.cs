@@ -6,6 +6,7 @@ namespace Backend.src.Service.Impl
 {
     public interface IUserService
     {
+        Task<bool> EmailExistsAsync(string email);
         Task<UserReadDto> CreateOneAsync(UserCreateDto createDto);
         Task<UserReadDto> CreateAdminAsync(UserCreateDto createDto);
         Task<string> SignInAsync(UserSignInDto userSignInDto);

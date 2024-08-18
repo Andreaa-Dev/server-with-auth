@@ -16,7 +16,11 @@ public class UserRepo : IUserRepo
     {
         _databaseContext = databaseContext;
         _user = databaseContext.Set<User>();
+    }
 
+    public async Task<bool> EmailExistsAsync(string email)
+    {
+        return await _user.AnyAsync(u => u.Email == email);
     }
 
     // register

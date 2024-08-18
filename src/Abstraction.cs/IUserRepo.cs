@@ -7,6 +7,7 @@ namespace Backend.src.Abstraction
     public interface IUserRepo : IBaseRepo<User>
     {
         Task<User?> FindByEmailAsync(string email);
+        Task<bool> EmailExistsAsync(string email);
 
     }
 }

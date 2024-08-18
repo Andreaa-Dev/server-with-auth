@@ -24,7 +24,7 @@ namespace Backend.src.Controller
 
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {
             var productList = await _productService.GetAllAsync(getAllOptions);
