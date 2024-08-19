@@ -18,12 +18,19 @@ namespace Backend.src.Shared
             return new CustomException(400, message);
         }
 
-        public static CustomException UnAuthorized(string message = "Cant not log in")
+        public static CustomException UnAuthorized(string message = "Unauthorized. Please log in")
         {
             return new CustomException(401, message);
         }
 
-        public static CustomException InternalError(string message = "Internal error")
+
+        // admin
+        public static CustomException Forbidden(string message = "Forbidden. The user does not have access rights to the content")
+        {
+            return new CustomException(403, message);
+        }
+
+        public static CustomException InternalError(string message = "Internal server error")
         {
             return new CustomException(500, message);
         }
