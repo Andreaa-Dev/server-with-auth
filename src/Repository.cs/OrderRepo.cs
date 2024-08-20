@@ -59,6 +59,8 @@ namespace Backend.src.Repository
 
         public async Task<Order?> GetByIdAsync(Guid id)
         {
+
+            // .AsNoTracking()
             return await _orders.FindAsync(id);
         }
 

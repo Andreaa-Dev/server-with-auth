@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 using System.Text;
-using Swashbuckle.AspNetCore.Filters;
-
 using Backend.src.Database;
 using Backend.src.Entity;
 using Backend.src.Service.Impl;
@@ -15,6 +13,7 @@ using Backend.src.Service;
 using Backend.src.Abstraction;
 using Backend.src.Shared;
 using Backend.src.Repository;
+using Backend.src.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,9 +54,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 
 // add controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
 
 // add database service
+// builder.Configuration.GetConnectionString
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
 dataSourceBuilder.MapEnum<Role>();
 builder.Services.AddDbContext<DatabaseContext>(options =>

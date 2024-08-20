@@ -10,4 +10,7 @@ namespace Backend.src.Abstraction
     {
 
     }
+    // way 2
+    // public interface IOrderDetailRepo : IBaseRepo<OrderDetail>;
+
 }

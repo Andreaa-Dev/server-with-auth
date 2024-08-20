@@ -60,3 +60,17 @@ Notes
 - change folder
 
 - deploy docker
+
+- product controller: name and nam
+- public ProductController(IProductService service)
+  {
+  \_productService = service;
+  }
+  use primary
+- namespace Backend.src.Controller => backend.src.Controllers
+
+- create new project in VS Code => extension
+- change protected to private => field - services
+- configuration: getSection() - token to static
+- check update method in repo
+- claim collection

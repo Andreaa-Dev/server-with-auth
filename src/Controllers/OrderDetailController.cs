@@ -12,10 +12,13 @@ namespace Backend.src.Controller
     public class OrderDetailController : BaseController
     {
         protected readonly IOrderDetailService _orderDetailService;
+
+        // constructor
         public OrderDetailController(IOrderDetailService service)
         {
             _orderDetailService = service;
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDetailReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
         {

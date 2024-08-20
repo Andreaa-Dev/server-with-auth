@@ -14,6 +14,7 @@ public class TokenUtils
     public string GenerateToken(User user)
     {
         var issuer = _config.GetSection("Jwt:Issuer").Value;
+        // claim collection expression
         var claims = new List<Claim>{
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),

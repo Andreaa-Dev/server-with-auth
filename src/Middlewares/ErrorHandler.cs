@@ -1,41 +1,45 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-public class ErrorHandlerMiddleware
+namespace Backend.src.Middlewares
 {
-    private readonly RequestDelegate _next;
-    private readonly ILogger<ErrorHandlerMiddleware> _logger;
 
-    public ErrorHandlerMiddleware(RequestDelegate next, ILogger<ErrorHandlerMiddleware> logger)
+    public class ErrorHandlerMiddleware
     {
-        _next = next;
-        _logger = logger;
-    }
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ErrorHandlerMiddleware> _logger;
 
-    public async Task InvokeAsync(HttpContext context)
-    {
-
-        try
+        public ErrorHandlerMiddleware(RequestDelegate next, ILogger<ErrorHandlerMiddleware> logger)
         {
-            await _next(context); // Call the next middleware in the pipeline
+            _next = next;
+            _logger = logger;
         }
-        catch (Exception ex)
+
+        public async Task InvokeAsync(HttpContext context)
         {
-            // Log the exception
-            _logger.LogError(ex, "An unhandled exception has occurred.");
 
-            // Handle the exception and return a response
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            context.Response.ContentType = "application/json";
-
-            var response = new
+            try
             {
-                StatusCode = context.Response.StatusCode,
-                Message = "An internal server error occurred.",
-                Detailed = ex.Message // Be careful with exposing detailed errors in production
-            };
+                await _next(context); // Call the next middleware in the pipeline
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                _logger.LogError(ex, "An unhandled exception has occurred.");
 
-            await context.Response.WriteAsJsonAsync(response);
+                // Handle the exception and return a response
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.ContentType = "application/json";
+
+                var response = new
+                {
+                    StatusCode = context.Response.StatusCode,
+                    Message = "An internal server error occurred.",
+                    Detailed = ex.Message // Be careful with exposing detailed errors in production
+                };
+
+                await context.Response.WriteAsJsonAsync(response);
+            }
         }
     }
 }

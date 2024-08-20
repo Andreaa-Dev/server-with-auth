@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class CategoryRepo : IBaseRepo<Category>
 {
+    // protected => private 
     protected readonly DbSet<Category> _category;
     protected readonly DatabaseContext _databaseContext;
 
