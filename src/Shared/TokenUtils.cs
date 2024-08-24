@@ -20,6 +20,12 @@ public class TokenUtils
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(ClaimTypes.Email, user.Email)
             };
+
+        //         (string, string)[] claims = [
+        // (ClaimTypes.NameIdentifier, user.Id.ToString()),
+        //     (ClaimTypes.Role, user.Role.ToString()),
+        //     (ClaimTypes.Email, user.Email)
+        // ];
         var audience = _config.GetSection("Jwt:Audience").Value;
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("Jwt:Key").Value!));

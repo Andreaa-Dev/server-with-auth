@@ -1,4 +1,4 @@
-Notes
+Notes for self-learning
 
 ### Packages
 
