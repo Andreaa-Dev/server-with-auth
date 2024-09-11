@@ -41,7 +41,7 @@ This is a simple e-commerce platform built using .NET, designed to manage produc
 - Navigate to the project folder:
 
   ```
-  cd ecommerce-dotnet
+  cd server-with-auth
   ```
 
 - Update the connection string in appsettings.json to match your SQL Server instance.
@@ -97,3 +97,5 @@ This is a simple e-commerce platform built using .NET, designed to manage produc
 1. Implement search functionality for products.
 
 2. Introduce shopping cart and payment gateway integration.
+
+3. Testing
