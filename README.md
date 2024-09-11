@@ -1,76 +1,99 @@
-Notes for self-learning
+# E-Commerce Platform
 
-### Packages
+## Overview
 
-1. Npgsql
-2. EFCore.NamingConventions
-3. Npgsql.EntityFrameworkCore.PostgreSQL
-4. Swashbuckle.AspNetCore.Filters
+This is a simple e-commerce platform built using .NET, designed to manage products, categories, users, and orders. The platform includes user authentication and role-based access control (RBAC), allowing different levels of access for administrators and regular users.
 
-### Notes
+## Features
 
-1. connection string in appsettings
-2. DTO: Data Transfer Objects: transfer data between different layers of an application, particularly between the client and server. DTO - response
-3. Repo
-4. Interface in service
-5. Mapper:
-6. IMapper: AutoMapper instance used to map between Category entities and Category DTOs.
-7. The Task represents the ongoing work and will complete when the operation is done.
-8. mapper.Map(updateDto, foundCategory) vs mapper.Map<Category, CategoryReadDto>(foundCategory)
+1. User Authentication: Register, login, and manage user sessions.
+2. Role-Based Access Control (RBAC): Different roles (e.g., Admin, Customer) with varying levels of access.
+3. Category Management: Administrators can create, update, and delete product categories.
+4. Product Management: Products are categorized, and both admins and users can view products. Admins can manage product listings (CRUD operations).
+5. Order Management: Users can place orders, and admins can manage and process them.
 
-- update an existing object (foundCategory) with new data from another object (updateDto)
-- create new object (CategoryReadDto) from existing object (found category)
+## API Endpoints: RESTful API endpoints for managing categories, products, users, and orders.
 
-9. folder division by 2 ways: feature (category, product, user) and layer (controller, service)
+### Technologies
 
-10. appsettings.json - hide important data. add to gitignore
-11. admin: 3 ways: change in database, create admin and make other become admin
-12. error handler in service.
+- .NET: The project is built with .NET, leveraging the framework's power for building a robust e-commerce platform.
+- Entity Framework Core: Used for database interactions.
+- ASP.NET Identity: Manages user authentication and role-based access control.
+- SQL Server: Database engine for persisting data.
+- Swagger: API documentation and testing.
 
-- 404 NotFound: NOTE: for demo product id, it has to have Guid type (dont remove id ONLY change value)
-- 410 UnAuthorized - users do not log in
-- 500 Internal server error - send request with wrong methods/endpoint
-- 400 Bad request (client error response) - create usr with same email
-- 412 InvalidData
+### Installation
 
-13. DTO vs Entity
+1. Prerequisites
 
-- DTOs: These are designed specifically for transferring data between different layers, such as between the client and server or between services. DTOs often have validation annotations to ensure that the data being sent or received is correct and meets business rules before it reaches the business logic or database layer.
-- DTOs: Use data annotations to enforce input validation, format data for display, and control how data is exposed through your API or UI.
-  Example:
-  [Required(ErrorMessage = "Password is required")]
-  [StringLength(255, ErrorMessage = "Must be between 5 and 255 characters", MinimumLength = 5)]
-  [DataType(DataType.Password)]
+- .NET SDK
+- SQL Server or any compatible database engine
+- Postman (for API testing) or Swagger.
 
-- Entities: These represent the actual data structure in your database, and data annotations here ensure that the data is valid and consistent when it's being persisted or retrieved from the database. They also map the entity to the database schema.
-- Entities: Use data annotations to define schema-related constraints, relationships, and database-specific configurations.
-  Example:
-  [Key]
-  [Required, ForeignKey("User")]
+2. Steps to Run
 
-### Migration
+- Clone the repository:
 
-- dotnet ef migrations add InitialCreate
-- dotnet ef database update
+  ```
+  git clone https://github.com/Andreaa-Dev/server-with-auth
+  ```
 
-* remember: dotnet add package Microsoft.EntityFrameworkCore.Design (same version with .NET)
+- Navigate to the project folder:
 
-### TO DO
+  ```
+  cd ecommerce-dotnet
+  ```
 
-- change folder
+- Update the connection string in appsettings.json to match your SQL Server instance.
 
-- deploy docker
-
-- product controller: name and nam
-- public ProductController(IProductService service)
-  {
-  \_productService = service;
+  ```
+  "ConnectionStrings": {
+  "DefaultConnection": "Server=yourserver;Database=ecommerce;User Id=yourusername;Password=yourpassword;"
   }
-  use primary
-- namespace Backend.src.Controller => backend.src.Controllers
+  ```
 
-- create new project in VS Code => extension
-- change protected to private => field - services
-- configuration: getSection() - token to static
-- check update method in repo
-- claim collection
+- Run database migrations to set up the database schema:
+  ```
+  dotnet ef database update
+  ```
+- Build and run the project:
+
+  ```
+  dotnet run
+  ```
+
+- Access the project:
+  ```
+  Web: https://localhost:5001
+  API: https://localhost:5001/swagger
+  ```
+
+### API Endpoints
+
+1. User Authentication
+   - POST /api/auth/register: Register a new user.
+   - POST /api/auth/login: Authenticate a user and get a token.
+2. Category Management (Admin Only)
+   - GET /api/categories: List all categories.
+   - POST /api/categories: Create a new category.
+   - PUT /api/categories/{id}: Update a category.
+   - DELETE /api/categories/{id}: Delete a category.
+3. Product Management
+   - GET /api/products: List all products.
+   - GET /api/products/{id}: View a product.
+   - POST /api/products: Create a new product (Admin).
+   - PUT /api/products/{id}: Update a product (Admin).
+   - DELETE /api/products/{id}: Delete a product (Admin).
+4. Order Management
+   - GET /api/orders: List all orders (Admin).
+   - POST /api/orders: Create a new order (Customer).
+   - PUT /api/orders/{id}: Update order status (Admin)
+5. Roles and Permissions
+   - Admin: Has full access to all endpoints, including management of categories, products, and orders.
+   - Customer: Can view products and place orders.
+
+### Future Improvements
+
+1. Implement search functionality for products.
+
+2. Introduce shopping cart and payment gateway integration.
