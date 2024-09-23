@@ -99,6 +99,9 @@ namespace backend.Migrations
                     b.HasIndex("OrderId")
                         .HasDatabaseName("ix_order_detail_order_id");
 
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_order_detail_product_id");
+
                     b.ToTable("order_detail", (string)null);
                 });
 
@@ -203,6 +206,15 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_order_detail_order_order_id");
+
+                    b.HasOne("Backend.src.Entity.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_detail_product_product_id");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Backend.src.Entity.Product", b =>

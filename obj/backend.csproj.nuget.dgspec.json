@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/andrea/teaching/sda-c/practice/backend/backend.csproj": {}
+    "/Users/andrea/teaching/sda-be/practice/backend/backend.csproj": {}
   },
   "projects": {
-    "/Users/andrea/teaching/sda-c/practice/backend/backend.csproj": {
+    "/Users/andrea/teaching/sda-be/practice/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/andrea/teaching/sda-c/practice/backend/backend.csproj",
+        "projectUniqueName": "/Users/andrea/teaching/sda-be/practice/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/Users/andrea/teaching/sda-c/practice/backend/backend.csproj",
+        "projectPath": "/Users/andrea/teaching/sda-be/practice/backend/backend.csproj",
         "packagesPath": "/Users/andrea/.nuget/packages/",
-        "outputPath": "/Users/andrea/teaching/sda-c/practice/backend/obj/",
+        "outputPath": "/Users/andrea/teaching/sda-be/practice/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/andrea/.nuget/NuGet/NuGet.Config"

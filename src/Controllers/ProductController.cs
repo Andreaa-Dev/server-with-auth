@@ -24,7 +24,7 @@ public class ProductController : BaseController
 
 
     [HttpGet]
-    [Authorize]
+    //[Authorize]
     //[Authorize(Roles = "Admin")]
 
     public async Task<ActionResult<IEnumerable<ProductReadDto>>> GetAllAsync([FromQuery] GetAllOptions getAllOptions)
