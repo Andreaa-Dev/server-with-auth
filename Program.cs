@@ -143,7 +143,11 @@ builder.Services.AddAuthorization(
 
 var app = builder.Build();
 
-// app.MapControllers();
+// Enable routing
+app.UseRouting();
+
+// Add a default route to check if the server is running
+app.MapGet("/", () => "Server is running"); // Root URL
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
