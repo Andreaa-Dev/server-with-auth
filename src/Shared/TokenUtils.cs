@@ -1,8 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Backend.src.Entity;
 using Microsoft.IdentityModel.Tokens;
+
+using Backend.src.Entity;
 
 public class TokenUtils
 {

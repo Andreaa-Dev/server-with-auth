@@ -28,6 +28,8 @@ namespace Backend.src.Entity
         public ICollection<Order> Orders { get; set; }
 
     }
+
+    // By default, EF Core will map the UserRole enum to an int in the database
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Role
     {
