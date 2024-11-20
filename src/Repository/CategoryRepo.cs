@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 public class CategoryRepo : IBaseRepo<Category>
 {
-    // protected => private 
     protected readonly DbSet<Category> _category;
     protected readonly DatabaseContext _databaseContext;
 
@@ -18,7 +17,6 @@ public class CategoryRepo : IBaseRepo<Category>
         _category = databaseContext.Set<Category>();
 
     }
-    // task: return type of async 
     public async Task<Category> CreateOneAsync(Category createObject)
     {
         await _category.AddAsync(createObject);
@@ -36,7 +34,6 @@ public class CategoryRepo : IBaseRepo<Category>
 
     public async Task<IEnumerable<Category>> GetAllAsync(GetAllOptions getAllOptions)
     {
-        // return await _category.ToListAsync();
         return await _category.Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
     }
 

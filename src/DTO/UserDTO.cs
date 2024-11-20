@@ -5,20 +5,19 @@ namespace Backend.src.DTO
     public class UserReadDto
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
+        public required string Password { get; set; }
 
         public Role Role { get; set; }
     }
 
     public class UserCreateDto
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
+        public required string Password { get; set; }
 
-        // default role as customer
     }
 
     public class UserUpdateDto
@@ -30,7 +29,7 @@ namespace Backend.src.DTO
 
     public class UserSignInDto
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public required string Email { get; set; }
+        public required string Password { get; set; }
     }
 }

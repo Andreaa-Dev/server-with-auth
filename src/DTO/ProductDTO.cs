@@ -5,8 +5,8 @@ namespace Backend.src.DTO
     public class ProductReadDto
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public required string Name { get; set; }
+        public required string Description { get; set; }
 
         public double Price { get; set; }
 
@@ -14,16 +14,14 @@ namespace Backend.src.DTO
 
         public DateTime CreatedAt { get; set; }
 
-        // public Guid CategoryId { get; set; }
-
-        public CategoryReadDto Category { get; set; }
+        public required CategoryReadDto Category { get; set; }
     }
 
 
     public class ProductCreateDto
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public required string Name { get; set; }
+        public required string Description { get; set; }
 
         public double Price { get; set; }
 

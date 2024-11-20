@@ -8,7 +8,7 @@ namespace Backend.src.Entity
 
         public int Quantity { get; set; }
 
-        public Product Product { get; set; }
+        public required Product Product { get; set; }
 
 
 

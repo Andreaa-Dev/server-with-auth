@@ -7,7 +7,7 @@ namespace Backend.src.Entity
 {
     public class Category : BaseEntity
     {
-        public string Name { get; set; }
-        public IEnumerable<Product> Products { get; set; }
+        public required string Name { get; set; }
+        public required IEnumerable<Product> Products { get; set; }
     }
 }

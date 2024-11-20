@@ -11,6 +11,6 @@ namespace Backend.src.DTO
     {
         public Guid Id { get; set; }
         public int Quantity { get; set; }
-        public ProductReadDto Product { get; set; }
+        public required ProductReadDto Product { get; set; }
     }
 }

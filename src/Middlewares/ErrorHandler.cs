@@ -20,14 +20,11 @@ namespace Backend.src.Middlewares
 
             try
             {
-                await _next(context); // Call the next middleware in the pipeline
+                await _next(context);
             }
             catch (Exception ex)
             {
-                // Log the exception
                 _logger.LogError(ex, "An unhandled exception has occurred.");
-
-                // Handle the exception and return a response
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Response.ContentType = "application/json";
 
@@ -35,7 +32,7 @@ namespace Backend.src.Middlewares
                 {
                     StatusCode = context.Response.StatusCode,
                     Message = "An internal server error occurred.",
-                    Detailed = ex.Message // Be careful with exposing detailed errors in production
+                    Detailed = ex.Message
                 };
 
                 await context.Response.WriteAsJsonAsync(response);
