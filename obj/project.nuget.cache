@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "er/k24sqLuc=",
+  "dgSpecHash": "AW0uBV1IP/k=",
   "success": true,
-  "projectFilePath": "/Users/andrea/teaching/sda-be/practice/backend/backend.csproj",
+  "projectFilePath": "/Users/andrea/projects/server-with-auth/backend.csproj",
   "expectedPackageFiles": [
     "/Users/andrea/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/Users/andrea/.nuget/packages/efcore.namingconventions/8.0.3/efcore.namingconventions.8.0.3.nupkg.sha512",
