@@ -33,34 +33,14 @@ builder.Services.AddSwaggerGen(options =>
         }
         );
 
-        // this logic is add to CustomAuthOperationFilter 
-        // options.AddSecurityRequirement(new OpenApiSecurityRequirement
-        // {
-        //     {
-        //     new OpenApiSecurityScheme
-        //     {
-        //         Reference = new OpenApiReference
-        //         {
-        //             Type = ReferenceType.SecurityScheme,
-        //             Id = "Bearer"
-        //         }
-        //     },
-        //     Array.Empty<string>()
-        // }
-        // });
-
-        // Register the custom operation filter
         options.OperationFilter<CustomAuthOperationFilter>();
     });
 
-// add controllers
 builder.Services.AddControllers(options =>
 {
     options.SuppressAsyncSuffixInActionNames = false;
 });
 
-// add database service
-// builder.Configuration.GetConnectionString
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
 dataSourceBuilder.MapEnum<Role>();
 builder.Services.AddDbContext<DatabaseContext>(options =>
@@ -70,10 +50,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 );
 
 
-// add auto-mapper service
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
-// add DI services
 builder.Services
     .AddScoped<ICategoryService, CategoryService>()
     .AddScoped<IBaseRepo<Category>, CategoryRepo>()
@@ -91,12 +69,7 @@ builder.Services
     .AddScoped<IOrderService, OrderService>()
     .AddScoped<IOrderRepo, OrderRepo>();
 
-// Add Identity services: only for the default admin, token and password
-// builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-//     .AddEntityFrameworkStores<DatabaseContext>()
-//     .AddDefaultTokenProviders();
 
-// cors
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
@@ -111,27 +84,18 @@ builder.Services.AddCors(options =>
                       });
 });
 
-// Add JWT Authentication
-// by default cookie
-builder.Services
-.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
+
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie(options =>
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
+        options.LoginPath = "/auth/login"; // Endpoint for login
+        options.LogoutPath = "/auth/logout"; // Endpoint for logout
+        options.AccessDeniedPath = "/auth/accessdenied"; // Endpoint for access denied
+        options.Cookie.Name = "AuthCookie";
+        options.Cookie.HttpOnly = true; // Prevent access via client-side scripts
+        options.ExpireTimeSpan = TimeSpan.FromDays(7); // Cookie expiration
+        options.SlidingExpiration = true; // Reset expiration with activity
+    });
 
 // Add Authorization
 builder.Services.AddAuthorization(
@@ -143,24 +107,19 @@ builder.Services.AddAuthorization(
 
 var app = builder.Build();
 
-// Enable routing
 app.UseRouting();
 
-// Add a default route to check if the server is running
-app.MapGet("/", () => "Server is running"); // Root URL
+app.MapGet("/", () => "Server is running");
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// middleware
 app.UseMiddleware<LoggingMiddleware>();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
-// cors
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();

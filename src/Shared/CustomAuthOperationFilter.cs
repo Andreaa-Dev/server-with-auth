@@ -8,7 +8,6 @@ namespace Backend.src.Shared
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            // Check if the action method has the custom attribute [Authorize] or another custom attribute you define
             var hasAuthorizeAttribute = context.MethodInfo.DeclaringType.GetCustomAttributes(true)
                 .Union(context.MethodInfo.GetCustomAttributes(true))
                 .Any(attr => attr.GetType().Name == "AuthorizeAttribute");

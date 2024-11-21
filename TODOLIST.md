@@ -1,0 +1,5 @@
+- cart
+- stock
+- cookie
+- image
+- payment
